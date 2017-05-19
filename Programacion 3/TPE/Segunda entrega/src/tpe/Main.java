@@ -38,7 +38,6 @@ public class Main {
                 			}
 					}
                 	A.agregarOrdenado(id, gustos);
-                	System.out.println(A.getCantidad());
             }
         } 
         catch (IOException e) {
@@ -48,8 +47,6 @@ public class Main {
         long endTime = 0;
         int tiempototal = 0;
         int cantidad = 0;
-        for(int i = 0;i<A.getCantidad();i++)
-        	System.out.println(A.getUsuarios(i).getElemento());
         String csvFileInsertar = "datasets/dataset_insert_10000.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(csvFileInsertar))) {
         	BufferedWriter bw = null;
@@ -84,7 +81,7 @@ public class Main {
                 	A.agregarOrdenado(id, gustos);
                 	cantidad++;
                 	endTime = System.nanoTime();
-                	String contenidoLinea1 = (endTime - startTime) + " ns" + ";" + id + ";"+ gustos.listar();
+                	String contenidoLinea1 = (endTime - startTime) + "ns" + ";" + id + ";"+ gustos.listar();
                 	tiempototal += (endTime - startTime);
                 	bw.write(contenidoLinea1);
                 	bw.newLine();
@@ -135,7 +132,7 @@ public class Main {
 	        			encontrado = "encontrado";
 	        		}
             	    endTime = System.nanoTime();
-            	    String contenidoLinea1 = items[0] + ";" + encontrado + ";" + (endTime - startTime) + " ns";
+            	    String contenidoLinea1 = items[0] + ";" + encontrado + ";" + (endTime - startTime) + "ns";
             	    bw.write(contenidoLinea1);
             	    bw.newLine();
             	    tiempototal += (endTime - startTime);

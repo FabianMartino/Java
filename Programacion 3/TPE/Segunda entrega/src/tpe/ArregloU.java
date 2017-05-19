@@ -37,7 +37,8 @@ public class ArregloU {
 	public void ordenarBurbujeo(){
 		if(cantidad>1){
 			for(int i = 0; i<cantidad;i++){
-				for(int j = 0; j<cantidad;j++){
+				System.out.println(i);
+				for(int j = 0; j<cantidad-1;j++){
 					if(usuarios[j].getElemento() > usuarios[j+1].getElemento()){
 						NodoU temporal = usuarios[j];
 						usuarios[j] = usuarios[j+1];
@@ -64,7 +65,7 @@ public class ArregloU {
 			
 		}
 		int posicion = buscarPosicion(id);
-		incertarYCorrer(posicion,id,gustos);
+		insertarYCorrer(posicion,id,gustos);
 	}
 	private int buscarPosicion(int id){
 		int posicion = 0;
@@ -76,7 +77,7 @@ public class ArregloU {
 		}
 		return cantidad;
 	}
-	private void incertarYCorrer(int posicion, int id, NodoG gustos){
+	private void insertarYCorrer(int posicion, int id, NodoG gustos){
 		if(posicion==cantidad){
 			usuarios[cantidad] = new NodoU();
 			usuarios[cantidad].setElemento(id);
