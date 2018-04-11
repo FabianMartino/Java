@@ -3,23 +3,46 @@ package Ej;
 public class Lista  {
 	protected Nodo first;
 	protected int size;
+	protected Nodo cursor;
+	protected Nodo ultimo;
 
 	public Lista() {
 		this.first = null;
 		this.size = 0;
+		this.cursor = null;
+		this.ultimo = null;
 	}
+		
 	public void insert(Object o) {
 		Nodo tmp = new Nodo(o, null);
 		tmp.setNext(first);
 		first = tmp;
 		this.size++;
+		if(size == 1) {
+			ultimo = first;
 		}
+	}
+	
+	public void agregarUltimo(Object o) {
+		if(size == 0) {
+			insert(o);
+		}
+		else {
+			Nodo nuevo = new Nodo(o,null);
+			ultimo.setNext(nuevo);
+			size++;
+			ultimo = ultimo.getNext();
+		}
+	}
 	
 	public Object extract() {
 		Nodo tmp = first;
 		tmp.setNext(null);
 		first = first.getNext();
 		size--;
+		if(size == 0) {
+			ultimo = null;
+		}
 		return tmp.getInfo();
 	}
 	
@@ -71,73 +94,53 @@ public class Lista  {
 			insert(o);
 		}
 		else {
-			Nodo tmp = this.first;
-			int t = (int) tmp.getInfo();
+			iniciarCursor();
+			int t = (int) cursor.getInfo();
 			if(t>(int)o) {
 				insert(o);
 			}
 			else {
 				boolean insertado = false;
-				int pos = 0;
-				Nodo siguiente = tmp.getNext();
-				while(!insertado&&pos<size) {
-					t = (int) siguiente.getInfo();
-					if((int)o<t) {
-						Nodo nuevo = new Nodo(o, siguiente);
-						tmp.setNext(nuevo);
+				Nodo siguiente = cursor.getNext();
+				while(!insertado&&cursor!=null) {
+					if(siguiente == null) {
+						agregarUltimo(o);
 						insertado = true;
-						size++;
 					}
 					else {
-						tmp = tmp.getNext();
-						siguiente = siguiente.getNext();
+						t = (int) siguiente.getInfo();
+						if((int)o<t) {
+							Nodo nuevo = new Nodo(o, siguiente);
+							cursor.setNext(nuevo);
+							insertado = true;
+							size++;
+						}
+						else {
+							cursor = cursor.getNext();
+							siguiente = siguiente.getNext();
+						}	
 					}
 				}
 			}
 		}
 	}
 	
-	public Lista combina_ordenado(Lista L) {
-		Lista resultado = new Lista();
-		Nodo tmp = first;
-		Nodo tmpL = L.first;
-		for(int i = 0;i<size;i++) {
-			int valor1 = (int)tmp.getInfo();
-			int valor2 = (int)tmpL.getInfo();
-			int count = 0;
-			while(L.size>count&&valor1!=valor2) {
-				valor2 = (int) tmpL.getInfo();
-				tmpL = tmpL.getNext();
-				count++;
-			}
-			if(count<=L.size&&valor1==valor2) {
-				resultado.insertar_ordenado(tmp.getInfo());
-			}
-			tmp = tmp.getNext();
-			tmpL = L.first;
-		}
-		return resultado;
+	public void iniciarCursor() {
+		cursor = first;
 	}
 	
-	public Lista combinada(Lista L) {
-		Lista resultado = new Lista();
-		Nodo tmp = first;
-		Nodo tmpL = L.first;
-		for(int i = 0;i<size;i++) {
-			int valor1 = (int)tmp.getInfo();
-			int valor2 = (int)tmpL.getInfo();
-			int count = 0;
-			while(L.size>count&&valor1!=valor2) {
-				valor2 = (int) tmpL.getInfo();
-				tmpL = tmpL.getNext();
-				count++;
-			}
-			if(count<=L.size&&valor1==valor2) {
-				resultado.insert(tmp.getInfo());
-			}
-			tmp = tmp.getNext();
-			tmpL = L.first;
+	public boolean cursorHasNext() {
+		if(cursor!=null) {
+			return true;
 		}
-		return resultado;
+		else {
+			return false;
+		}
+	}
+	
+	public Object cursorNext() {
+		Nodo tmp = cursor;
+		cursor = cursor.getNext();
+		return tmp.getInfo();
 	}
 }
