@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="Practico 1 Ejercicio 3/src"/>
+	<classpathentry kind="src" path="Practico 2 Ejercicio 3/src"/>
+	<classpathentry kind="src" path="Practico 3/src"/>
+	<classpathentry kind="src" path="Practico 4/src"/>
+	<classpathentry kind="src" path="TPE/Primera entrega/src"/>
+	<classpathentry kind="src" path="TPE/Segunda entrega/src"/>
+	<classpathentry kind="src" path="TPE/Tercera entrega/src"/>
+	<classpathentry kind="output" path="Practico 3/bin"/>
+</classpath>
