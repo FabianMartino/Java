@@ -5,16 +5,19 @@ public class ArbolB {
 	protected int size;
 	protected NodoA cursor;
 	
+	//complejidad O(1)
 	public void Arbol() {
 		raiz = null;
 		size = 0;
 		cursor = null;
 	}
 	
+	//complejidad O(1)
 	public Object getRaiz() {
 		return raiz;
 	}
 	
+	//complejidad O(1)
 	public boolean isEmpty() {
 		if(raiz != null) {
 			return false;
@@ -24,6 +27,10 @@ public class ArbolB {
 		}
 	}
 	
+	/**Busca un elemento en el arbol y la complejidad es O(n) cuando n son los elementos del arbol
+	 * @param o
+	 * @return
+	 */
 	public boolean hasElement(int o) {
 		cursor = raiz;
 		if(buscar(o,cursor))
@@ -32,6 +39,11 @@ public class ArbolB {
 			return false;
 	}
 	
+	/**es la funcion recursiva que es llamada por el hasElement(int) y recorre tod el arbol por lo que la complejidad es O(n)
+	 * @param o
+	 * @param puntero
+	 * @return
+	 */
 	private boolean buscar(int o,NodoA puntero) {
 		if(puntero != null) {
 			if(puntero.getInfo()==o) {
@@ -57,6 +69,11 @@ public class ArbolB {
 		return false;
 	}
 	
+	/**inserta elementos comparando si son mayor o menor a otro que ya se encuentra en el arbol por lo que si se insertan
+	 * elementos de una manera espesifica se puede dar que termine con la forma de una lista por lo que la complejidad es O(n)
+	 * en el peor de los casos ya que n es la cantidad de elementos
+	 * @param o
+	 */
 	public void insertar(int o) {
 		if(isEmpty()) {
 			NodoA nuevo = new NodoA(o,null,null);
@@ -92,6 +109,9 @@ public class ArbolB {
 		size++;
 	}
 	
+	/**si el arbol tiene elementos llama a la funcion borrarCursor por lo que la complejidad temporqal es o(n)
+	 * @param valor
+	 */
 	public void delete(int valor) {
 		if(size > 0) {
 			cursor = raiz;
@@ -100,6 +120,12 @@ public class ArbolB {
 		}
 	}
 	
+	/**busca el elemento que tiene que eliminar y si este tiene hijos busca el NMI o NMD para remplazarlo,
+	 * podria ser que necesite recorrer todos los nodos del arbol por lo que la complejidad
+	 * es O(n) siendo n los elementos del arbol
+	 * @param valor
+	 * @param pos
+	 */
 	private void borrarCursor(int valor, NodoA pos) {
 		if(pos != null) {
 			if(pos.getInfo() == valor) {
@@ -140,6 +166,9 @@ public class ArbolB {
 		else return;
 	}
 	
+	/**busca la altura del arbol por lo que debe recorrer todos los elementos y la compejidad es O(n)
+	 * @return
+	 */
 	public int getHeight() {
 		if(size > 0) {
 			cursor = raiz;
@@ -148,6 +177,11 @@ public class ArbolB {
 		else return 0;
 	}
 	
+	/**recorre de manera recursiva el arbol contando los niveles para identificar cual es la altura de arbol
+	 * por lo que es de complejidad de O(n) con n siendo la cantidad de elementos del arbol
+	 * @param pos
+	 * @return
+	 */
 	private int buscarAltura(NodoA pos) {
 		if(pos == null) {
 			return 0;
