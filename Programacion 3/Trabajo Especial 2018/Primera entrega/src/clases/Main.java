@@ -43,7 +43,7 @@ public class Main {
                 	Libro nuevo = new Libro(titulo,autor,paginas,generos);
                 		for(int j = 0; j<generos.length;j++) {
                 			if(I.getGenero()==" ") {
-                        		I = new Indice(generos[j], nuevo);
+                        		I = new Indice(generos[j], nuevo, null);
                         	}
                 			else {                													
 	                			Indice tmp = I.buscarGenero(generos[j]);
@@ -51,9 +51,7 @@ public class Main {
 	                				tmp.addLibros(nuevo);
 	                			}
 	                			else {
-	                				tmp = new Indice(generos[j], nuevo);
-	                				tmp.setSig(I);
-	                				I = tmp;
+	                				I.agregarIndice(generos[j], nuevo);
                 			}
                 		}
                 	}
@@ -66,43 +64,47 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /**
-        BufferedWriter bw = null;
-		try {
-			File file = new File(salida);
-			if (!file.exists()) {
-				file.createNewFile();
-			}
 
-			FileWriter fw = new FileWriter(file);
-			bw = new BufferedWriter(fw);
+        String aBuscar = "poesía"; // se pone el genero que se quiere buscar
+        Indice buscado = I.buscarGenero(aBuscar);
+        if(buscado!=null) {
+        	ArrayList<Libro> resultado = I.buscarGenero(aBuscar).getLibros();
+        	BufferedWriter bw = null;
+    		try {
+    			File file = new File(salida);
+    			if (!file.exists()) {
+    				file.createNewFile();
+    			}
 
-			// Escribo la primer linea del archivo
-			String contenidoLinea1 = "Usuario1;Tiempo1";
-			bw.write(contenidoLinea1);
-			bw.newLine();
+    			FileWriter fw = new FileWriter(file);
+    			bw = new BufferedWriter(fw);
+    			
+    			String contenidoLinea = "titulo";
+    			bw.write(contenidoLinea);
+    			bw.newLine();
+    			for(int i = 0; i < resultado.size(); i++) {
+    				contenidoLinea = resultado.get(i).getTitulo();
+        			bw.write(contenidoLinea);
+        			bw.newLine();
+    			}
 
-			// Escribo la segunda linea del archivo
-			String contenidoLinea2 = "Usuario2;Tiempo2";
-			bw.write(contenidoLinea2);
-			bw.newLine();
-			
-			/*
-			 *
-			 * ... 
-			 * 
-			*
+    			
 
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} finally {
-			try {
-				if (bw != null)
-					bw.close();
-			} catch (Exception ex) {
-				System.out.println("Error cerrando el BufferedWriter" + ex);
-			}
-		}**/
+    		} catch (IOException ioe) {
+    			ioe.printStackTrace();
+    		} finally {
+    			try {
+    				if (bw != null)
+    					bw.close();
+    			} catch (Exception ex) {
+    				System.out.println("Error cerrando el BufferedWriter" + ex);
+    			}
+    		}
+        }
+        else {
+        	System.out.println("no se encontro ese genero");
+        }
+        
 
 	}
 
