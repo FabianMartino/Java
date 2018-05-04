@@ -18,13 +18,13 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		String csvFile = "datasets/dataset1.csv";
+		String csvFile = "datasets/dataset4.csv";
         String line = "";
         String separador = ",";
         String sepLibro = " ";
         String salida = "datasets/salida.csv";
         Coleccion C = new Coleccion();
-        Indice I = new Indice();
+        Indice I = null;
 
         
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -42,7 +42,7 @@ public class Main {
                 	String[] generos = libros[i+3].split(sepLibro);
                 	Libro nuevo = new Libro(titulo,autor,paginas,generos);
                 		for(int j = 0; j<generos.length;j++) {
-                			if(I.getGenero()==" ") {
+                			if(I == null) {
                         		I = new Indice(generos[j], nuevo, null);
                         	}
                 			else {                													
