@@ -1,25 +1,20 @@
 package clases;
 
 public class NodoA {
-	private NodoG desde;
-	private NodoG hasta;
+	private int hasta;
 	private int valor;
+	private NodoA next;
 	
-	public NodoA(NodoG d, NodoG h) {
-		this.desde = d;
-		this.hasta = h;
+
+	public NodoA(int posDestino) {
+		this.hasta = posDestino;
 		this.valor = 1;
 	}
-	public NodoG getDesde() {
-		return desde;
-	}
-	public void setDesde(NodoG desde) {
-		this.desde = desde;
-	}
-	public NodoG getHasta() {
+	
+	public int getHasta() {
 		return hasta;
 	}
-	public void setHasta(NodoG hasta) {
+	public void setHasta(int hasta) {
 		this.hasta = hasta;
 	}
 	public int getValor() {
@@ -30,5 +25,12 @@ public class NodoA {
 	}
 	public void aumentarValor() {
 		this.valor++;
+	}
+	public NodoA getNext() {
+		return next;
+	}
+
+	public void setNext(NodoA next) {
+		this.next = next;
 	}
 }

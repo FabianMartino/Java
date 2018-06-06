@@ -5,22 +5,15 @@ import java.util.ArrayList;
 
 public abstract class Grafo{
 	
-	protected int numVertices, numArcos;
-	protected ArrayList<NodoG> adyacentes;
-	protected ArrayList<NodoA> direcciones;
+	protected ArrayList<NodoG> vertices;
 
 	
 	public Grafo() {
-		this.numVertices = 0;
-		this.numArcos = 0;
-		this.adyacentes = new ArrayList<NodoG>();
-		this.direcciones = new ArrayList<NodoA>();
+		this.vertices = new ArrayList<NodoG>();
 
 	}
 	
 		
-	public abstract int numVertices();
-	public abstract int numArcos();
 	public abstract boolean existeArco(String i, String j);
 	public abstract void insertarArco(String i, String j);
 	public abstract void insertarVertice(String a);

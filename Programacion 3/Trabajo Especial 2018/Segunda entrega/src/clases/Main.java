@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  * @author
@@ -14,113 +12,109 @@ import java.io.FileWriter;
  *	Martino Martinez, Fabián 
  *
  */
+
+
 public class Main {
 
+	
+	private static Scanner scan;
+
 	public static void main(String[] args) {
-		GrafoD g = new GrafoD();
-		g.insertarVertice("A");
-		g.insertarVertice("B");
-		g.insertarVertice("C");
-		g.insertarVertice("D");
-		g.insertarVertice("E");
-		
-		g.insertarArco("A", "B");
-		g.insertarArco("A", "C");
-		g.insertarArco("A", "D");
-		g.insertarArco("D", "B");
-		System.out.println(g.imprimirAdyacentes("A")+" "+g.numArcos+" "+g.numVertices);
-		}
-	}
-/*
-		String csvFile = "datasets/dataset4.csv";
+//		GrafoD g = new GrafoD();
+//		g.insertarVertice("A");
+//		g.insertarVertice("B");
+//		g.insertarVertice("C");
+//		g.insertarVertice("D");
+//		g.insertarVertice("E");
+//		
+//		g.insertarArco("A", "B");
+//		g.insertarArco("A", "C");
+//		g.insertarArco("A", "D");
+//		g.insertarArco("D", "B");
+//		
+
+
+		String csvFile = "datasets/datasetbusqueda4.csv";
         String line = "";
         String separador = ",";
-        String sepLibro = " ";
-        String salida = "datasets/salida.csv";
-        Coleccion C = new Coleccion();
-        Indice I = null;
-
+        GrafoD g = new GrafoD();
         
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
         	br.readLine();    //Saltea la primer linea
             while ((line = br.readLine()) != null) {
 
-                String[] libros = line.split(separador);
+                String[] busqueda = line.split(separador);
 
                 // ---------------------------------------------
                 int i = 0;
-                while (i < libros.length) {
-                	String titulo = libros[i];
-                	String autor = libros[i+1];
-                	int paginas = Integer.parseInt(libros[i+2]);
-                	String[] generos = libros[i+3].split(sepLibro);
-                	Libro nuevo = new Libro(titulo,autor,paginas,generos);
-                		for(int j = 0; j<generos.length;j++) {
-                			if(I == null) {
-                        		I = new Indice(generos[j], nuevo, null);
-                        	}
-                			else {                													
-	                			Indice tmp = I.buscarGenero(generos[j]);
-	                			if(tmp != null) {
-	                				tmp.addLibros(nuevo);
-	                			}
-	                			else {
-	                				I.agregarIndice(generos[j], nuevo);
-                			}
-                		}
-                	}
-                	C.agregarLibro(nuevo);
-                	i=i+4;
+                String[] generos = new String[busqueda.length];
+                while (i < busqueda.length) {
+                	generos[i] = busqueda[i];
+                	i++;
                 }
+            	g.buscar(generos);
+
                 // ---------------------------------------------
 
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        String aBuscar = "poesía"; // se pone el genero que se quiere buscar
-        Indice buscado = I.buscarGenero(aBuscar);
-        if(buscado!=null) {
-        	ArrayList<Libro> resultado = I.buscarGenero(aBuscar).getLibros();
-        	BufferedWriter bw = null;
-    		try {
-    			File file = new File(salida);
-    			if (!file.exists()) {
-    				file.createNewFile();
-    			}
-
-    			FileWriter fw = new FileWriter(file);
-    			bw = new BufferedWriter(fw);
-    			
-    			String contenidoLinea = "titulo";
-    			bw.write(contenidoLinea);
-    			bw.newLine();
-    			for(int i = 0; i < resultado.size(); i++) {
-    				contenidoLinea = resultado.get(i).getTitulo();
-        			bw.write(contenidoLinea);
-        			bw.newLine();
-    			}
-
-    			
-
-    		} catch (IOException ioe) {
-    			ioe.printStackTrace();
-    		} finally {
-    			try {
-    				if (bw != null)
-    					bw.close();
-    			} catch (Exception ex) {
-    				System.out.println("Error cerrando el BufferedWriter" + ex);
-    			}
-    		}
-        }
-        else {
-        	System.out.println("no se encontro ese genero");
-        }
-        
-
+        g.imprimirAdyacentes("");
+			int valorMenu = -11;
+			while(valorMenu != 0) {
+				System.out.println("ingrese una de las siguentes opciones:");
+				System.out.println("1.buscar los n elemntos con mas busquedas despues de un genero");
+				System.out.println("2.buscar todos los generos que fueron buscados despues de un genero");
+				System.out.println("3.devolver un subgrafo afin desde un genero dado");
+				System.out.println("0.salir");
+			    scan = new Scanner(System.in);
+			    valorMenu = scan.nextInt();
+				String genero = "";
+				switch (valorMenu) {
+				case 1:
+					System.out.println("ingrese un genero");
+					scan = new Scanner(System.in);
+					genero=scan.next();
+					System.out.println("ingrese la cantidad maxima de generos para devolver");
+					int cantidad = 0;
+					scan = new Scanner(System.in);
+					cantidad = scan.nextInt();
+			        ArrayList<String> porCantidad = g.buscadosDespuesDe(cantidad, genero);
+				    for (int i = 0; i < porCantidad.size(); i++) {
+					   	System.out.println(porCantidad.get(i));
+					}
+				    System.out.println();
+					break;
+				case 2:
+					System.out.println("ingrese un genero");
+					scan = new Scanner(System.in);
+					genero=scan.next();
+			        ArrayList<String> todos = g.todosDespuesDe(genero);
+			        for (int i = 0; i < todos.size(); i++) {
+				      	System.out.println(todos.get(i));
+				    }
+			        
+					break;
+				case 3:
+					System.out.println("ingrese un genero");
+					scan = new Scanner(System.in);
+					genero=scan.next();
+					GrafoD resultante = g.generarVinculados("informática");
+					String[] tmp = resultante.imprimir();
+					for (int i = 0; i < tmp.length; i++) {
+						System.out.println(tmp[i]);
+					}
+					break;
+				case 0:
+					valorMenu=0;
+					break;
+				default:
+					break;
+				}
+			}
 	}
-
 }
-*/
+
+//
+//}
