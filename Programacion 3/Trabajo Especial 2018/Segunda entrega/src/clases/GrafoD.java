@@ -3,11 +3,10 @@ package clases;
 import java.util.ArrayList;
 
 public class GrafoD extends Grafo{
-	private int invalido; 
+	final static int invalido = -1; 
 	
 	public GrafoD() {
 		super();
-		invalido = -1;
 	}
 
 	public int buscarPosicion(String nombre){
@@ -142,11 +141,6 @@ public class GrafoD extends Grafo{
 		}
 		int origen = buscarPosicion(nombre);
 		buscarVinculos(resultado,origen,origen,color);
-//		for (int i = 0; i < llegan.length; i++) {
-//			if(llegan[i]!=invalido) {
-//				resultado.vertices.add(this.vertices.get(llegan[i]));
-//			}
-//		}
 		return resultado;
 	}
 	private void buscarVinculos(GrafoD resultado, int origen, int buscado, ArrayList<String> color) {

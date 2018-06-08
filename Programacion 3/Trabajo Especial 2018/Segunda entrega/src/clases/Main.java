@@ -20,19 +20,6 @@ public class Main {
 	private static Scanner scan;
 
 	public static void main(String[] args) {
-//		GrafoD g = new GrafoD();
-//		g.insertarVertice("A");
-//		g.insertarVertice("B");
-//		g.insertarVertice("C");
-//		g.insertarVertice("D");
-//		g.insertarVertice("E");
-//		
-//		g.insertarArco("A", "B");
-//		g.insertarArco("A", "C");
-//		g.insertarArco("A", "D");
-//		g.insertarArco("D", "B");
-//		
-
 
 		String csvFile = "datasets/datasetbusqueda4.csv";
         String line = "";
@@ -115,6 +102,3 @@ public class Main {
 			}
 	}
 }
-
-//
-//}
