@@ -28,39 +28,33 @@ public class CuboMagico {
 		}
 		int col = 0;
 		int fila = 0;
-		int[][] tmp = cubo;
 		boolean encontrado = false;
-		tmp = back(col,fila,sumCol,sumFila,tmp,usados,encontrado);
-		if(tmp.length>0) {
-			this.cubo = tmp;
-		}
+		back(col,fila,sumCol,sumFila,usados,encontrado);
 	}
-	private int[][] back(int col,int fila,int[] sumCol,int[] sumFila,int[][] cuboAux,boolean[] usados,boolean encontrado) {		
+	private void back(int col,int fila,int[] sumCol,int[] sumFila,boolean[] usados,boolean encontrado) {		
 		if(fila==dimencion) {
 			if(validarSuma(sumCol,sumFila)) {
 				encontrado = true;
-				return cuboAux;
+				return;
 			}
 		}
 		else {
 			int i = 0;
-			int[][] tmp = cuboAux;
-			int[][] resultado;
 			while(i<usados.length&&!encontrado) {
 				if(!usados[i]) {
 					usados[i]=true;
 					sumCol[col] += i;
 					sumFila[fila] += i;
 					if(sumCol[col]<= suma&&sumFila[fila]<= suma) {
-						tmp[col][fila] = i;
+						cubo[col][fila] = i;
 					    if(col < dimencion-1) {
-					    	resultado = back(col+1,fila,sumCol,sumFila,tmp,usados,encontrado);
+					    	back(col+1,fila,sumCol,sumFila,usados,encontrado);
 					    }
 					    else {
-					    	resultado = back(0,fila+1,sumCol,sumFila,tmp,usados,encontrado);
+					    	back(0,fila+1,sumCol,sumFila,usados,encontrado);
 					    }
 						if(validarSuma(sumCol,sumFila)) {
-							return resultado;
+							return;
 						}
 					}
 					sumCol[col] -= i;
@@ -68,11 +62,10 @@ public class CuboMagico {
 					usados[i]=false;
 				}
 				i++;
+				cubo[col][fila]=0;
 			}
 		}
-		int[][] vacio = new int[dimencion][dimencion];
-		return vacio;
-
+		return;
 	}
 	
 	private boolean validarSuma(int[] sumCol,int[] sumFila) {
